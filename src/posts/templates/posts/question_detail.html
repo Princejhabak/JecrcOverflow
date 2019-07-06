@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load increment_action %}
+{% block content %}
+
+
+<div class="content container">
+    <div class="row">
+        <div class="col-md-8">
+            <ul>
+
+                <div class="post">
+                    <div class="date">
+                        <p><i><b>Asked by - </b>{{question.user.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            {{ question.created_date }}</i></p>
+                    </div>
+                    <h1 style="color:black">{{ question.text }}</h1>
+                    <p>{{ question.details|safe|linebreaksbr }}</p>
+                    <br>
+
+                    <!--<h2>Answers</h2>
+                    {% for answer in answers %}
+                      {% if answer.question.text == question.text %}
+                        <p>{{ answer.text|linebreaksbr }}</p>
+                      {% endif %}
+                    {% endfor %}-->
+                    {% if answers.count == 1%}
+                        <h2>{{answers.count}}&nbsp;Answer</h2><br>
+                    {% else %}
+                        <h2>{{answers.count}}&nbsp;Answers</h2><br>
+                    {% endif %}
+
+                    {%if answers %}
+                        {% for answer in answers %}
+                            <p><i><b>Answered by - </b>{{ answer.user|linebreaksbr }}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{answer.date}}</i></p>
+                            <p>{{ answer.text|safe|linebreaksbr }}</p><br>
+                            <div class="row" style="margin-left:40px;">
+                                <div class="col-md-6">
+                                    <p class="mr-4" style="color: #D30202;">Comments -</p>
+
+                                    {% for comment in comments %}
+                                        {% if comment.answer == answer %}
+                                            {{comment.text}}<hr>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    <a href="{% url 'posts:comment_create' pk=answer.pk %}">add a comment</a>
+
+                                </div>
+                            </div>
+                            <hr>
+                        {% endfor %}
+
+                        <br>
+                    {% else %}
+                        <p>No answers yet</p><hr><br>
+                    {% endif %}
+
+                    <!--{% if question.user != user %}-->
+                        <!--{% if answers %}-->
+
+                            <!--{% for answer in answers %}-->
+                                <!--{% if answer.user != user %}  &lt;!&ndash; to do for 1st answer object condition is-->
+                                <!--false(Pro=Pro) but for second answer object it is true (bye!=Pro) so form is displayed-->
+                                <!--in (this is test question may 6)-->
+                                    <!--{{answer.user}}-->
+                                    <!--{{user}}&ndash;&gt;-->
+                                    <!--&lt;!&ndash;{{x|increment}}&ndash;&gt;-->
+
+                                    <!--<form method="post">-->
+                                        <!--{% csrf_token %}-->
+                                        <!--{{answer_form.media}}-->
+                                        <!--{% bootstrap_form answer_form %}-->
+                                        <!--<br>-->
+                                        <!--<input type="submit" value="Post Your Answer" class="btn"-->
+                                               <!--style="background-color: #D30202; color:white">-->
+                                    <!--</form>-->
+
+                                <!--{% endif %}-->
+                            <!--{% endfor %}-->
+
+                        <!--{% else %}-->
+                            <!--<form method="post">-->
+                                <!--{% csrf_token %}-->
+                                <!--{{answer_form.media}}-->
+                                <!--{% bootstrap_form answer_form %}-->
+                                <!--<br>-->
+                                <!--<input type="submit" value="Post Your Answer" class="btn" style="background-color: #D30202; color:white">-->
+                            <!--</form>-->
+                        <!--{% endif %}-->
+
+                    <!--{% endif %}-->
+
+                    {% if question.user != user %}
+                        <form method="post">
+                            {% csrf_token %}
+                            {{answer_form.media}}
+                            {% bootstrap_form answer_form %}
+                            <br>
+                            <input type="submit" value="Post Your Answer" class="btn" style="background-color: #D30202; color:white">
+                        </form>
+                    {% endif %}
+
+                </div>
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

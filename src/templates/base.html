@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Quora</title>
+    <!-- Latest compiled and minified CSS -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    <!--<link rel="stylesheet" href="{% static 'simplesocial/css/master.css'%}">-->
+
+
+</head>
+
+
+<body>
+
+<nav class="navbar  mynav" role="navigation" id="navbar" style="background-color: #D30202;">
+    <div class="container">
+
+        <!--<img src="https://ih1.redbubble.net/image.316142692.7951/ap,550x550,12x12,1,transparent,t.png"
+             style="width:30px;" class="pt-4">-->
+        <a class="navbar-brand mynav " href="{% url 'home' %}" style="color:white">JecrcOverflow</a>
+
+
+        <ul class="nav navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+            <!--<li><a href="{% url 'posts:question_list' %}" class="btn btn-simple" style="color:white">Questions</a></li>-->
+
+            <li><a href="{% url 'posts:question_list' %}" class="btn btn-simple" style="color:white">My Questions</a></li>
+            <li><a href="{% url 'posts:question_create' %}" class="btn btn-simple" style="color:white">Ask Question</a></li>
+            <li><a href="#" class="btn btn-simple" style="color:white">@{{ user.username }}</a></li>
+            <li><a href="{% url 'accounts:logout' %}" class="btn btn-simple" style="color:white">Log out</a></li>
+
+            {% else %}
+
+            <li><a href="{% url 'accounts:login' %}" class="btn btn-simple" style="color:white">Login</a></li>
+            <li><a href="{% url 'accounts:signup' %}" class="btn btn-simple" style="color:white">Sign up</a></li>
+
+            {% endif %}
+        </ul>
+
+    </div>
+</nav>
+
+<div class="container mycontent">
+    {% block content %}
+
+    {% endblock %}
+
+</div>
+
+
+<canvas id="canvas"></canvas>
+
+
+</body>
+
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+<script src="{% static 'simplesocial/js/master.js'%}" type="text/javascript"></script>
+</html>

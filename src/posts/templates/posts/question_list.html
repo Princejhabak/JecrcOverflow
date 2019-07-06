@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content container">
+
+    <br>
+
+            <form class="form-inline">
+              <input class="form-control" name="q" type="search" placeholder="Search" style="width:630px; margin-left:40px">
+              <button class="btn" type="submit" style="background-color: #D30202; color:white">Search</button>
+            </form>
+
+    <br><br><br>
+
+    <div class="row">
+        <div class="col-md-8">
+
+            <ul>
+            {% if question_list %}
+                {% for question in question_list %}
+
+                <div class="post">
+                    <div class="date">
+                        {{ question.created_date }}
+                    </div>
+                    <a href="{% url 'posts:question_detail' pk=question.pk %}"><h1 style="color:black">{{ question.text|linebreaksbr }}</h1></a>
+
+                    <br>
+                    <hr>
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+                <br>
+                {% if request.GET.q %}
+                    <h2>No posts matching your search found</h2>
+                {% else %}
+                    <h2>No posts yet !!</h2>
+                    <h2>Click Ask Question or <a href="{% url 'posts:question_create' %}">click here</a></h2>
+                {% endif %}
+            {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

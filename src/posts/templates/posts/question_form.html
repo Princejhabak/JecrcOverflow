@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+
+    <h1>Ask a query</h1>
+    <br>
+    <form method="post">
+        {% csrf_token %}
+        {{form.media}}
+        {% bootstrap_form form %}
+        <br>
+        <input type="submit" value="Submit" class="btn" style="background-color: #D30202; color:white">
+    </form>
+
+{% endblock %}
